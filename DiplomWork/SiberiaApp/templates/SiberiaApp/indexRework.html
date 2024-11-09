@@ -1,0 +1,2193 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru" style="height: auto;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <!---->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/fontawesome-free/css/all.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!---->
+    <link rel="stylesheet"
+          href="{% static 'SiberiaApp/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/jqvmap/jqvmap.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/dist/css/adminlte.min.css?v=3.2.0' %}">
+    <!---->
+    <link rel="stylesheet"
+          href="{% static 'SiberiaApp/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/daterangepicker/daterangepicker.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/summernote/summernote-bs4.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <script src="https://kit.fontawesome.com/2b12c95849.js" crossorigin="anonymous"></script>
+
+    <script src="{% static 'SiberiaApp/fabric/fabric.js' %}"></script>
+    <script src="{% static 'SiberiaApp/mousewheel/jquery.mousewheel.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'SiberiaApp/DataTables/datatables.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+
+
+    <style>
+        #sidebarShell {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            right: -250px;
+            height: 100vh;
+            z-index: 999;
+
+            transition: all 0.3s;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        #sidebarShell.active {
+            right: 0;
+        }
+
+        #dismiss {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            position: absolute;
+            top: 65px;
+            right: 10px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        #dismiss:hover {
+
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            /* full screen */
+            width: 100vw;
+            height: 100vh;
+            /* middle layer, i.e. appears below the sidebar */
+            z-index: 998;
+            opacity: 0;
+            /* animate the transition */
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* display .overlay when it has the .active class */
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .sidebar-info-header {
+            padding: 15px 20px 10px;
+            text-align: center;
+        }
+
+        .head-info-text {
+            margin: 20px 50px 0px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #FFFFFF;
+            text-align: center;
+            cursor: default;
+        }
+
+        #sidebar-content-info-build div {
+            padding: 2px 2px 2px;
+            text-align: center;
+            color: white;
+            border: solid #FFFFFF;
+            border-width: 1px 0;
+        }
+
+        #textBuild tbody tr:hover {
+            cursor: pointer;
+            background-color: gray;
+        }
+
+        #textBuild tr {
+            text-align: center;
+
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        #textBuild th {
+
+            border-top: 0px;
+        }
+
+        #back_arrow {
+            float: left;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        #markerOnBuild {
+            z-index: 110;
+            position: absolute;
+            left: 37%;
+            top: 10%;
+            width: 420px;
+            display: none;
+        }
+
+        #textBuild table {
+            color: #FFFFFF;
+        }
+
+        {% comment %}#marker-table{
+            margin: 20px 20px 25px;
+        }{% endcomment %}
+
+        #marker-name {
+            cursor: default;
+        }
+
+        table {
+            cursor: default;
+        }
+
+        #number-people {
+            cursor: default;
+        }
+
+        th {
+            text-align: center;
+            width: 10%;
+        }
+
+        thead {
+            padding-top: 5px;
+        }
+
+        td {
+            cursor: pointer;
+        }
+
+        .nav-link {
+            cursor: pointer;
+        }
+
+        #person-table {
+            margin: 20px 20px 25px;
+        }
+
+        #person-name {
+            cursor: default;
+            padding-top: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #818181;
+            margin-right: 10%;
+            margin-left: 10%;
+        }
+
+        #person-info:hover {
+            border-width: 0px 0;
+        }
+
+        #person-history:hover {
+            border-width: 0px 0;
+        }
+
+        label {
+            margin-top: 8px;
+        }
+
+        #person-scroll-control {
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        #marker-scroll-control {
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        #person-scroll-control::-webkit-scrollbar {
+            width: 10px;
+            background-color: #dedee1;
+        }
+
+        #person-scroll-control::-webkit-scrollbar-thumb {
+            background-color: #555e65;
+        }
+
+        #choice-history {
+            z-index: 110;
+            position: absolute;
+            left: 37%;
+            top: 15%;
+            width: 480px;
+            height: 320px;
+            align-content: center;
+            display: none;
+        }
+
+        #fabric-history {
+            z-index: 110;
+            position: absolute;
+            left: 37%;
+            top: 15%;
+            width: 420px;
+            height: 320px;
+            align-content: center;
+            display: none;
+        }
+        
+        #fabric-history-content {
+            width: 420px;
+            height: 320px;
+        }
+
+        #statistics-container {
+            z-index: 110;
+            position: absolute;
+            left: 37%;
+            top: 0%;
+            width: 520px;
+            height: 520px;
+            align-content: center;
+            display: none;
+        }
+
+        #system {
+            z-index: 110;
+            position: absolute;
+            left: 37%;
+            top: 15%;
+            width: 420px;
+            height: 320px;
+            align-content: center;
+            display: none;
+        }
+
+        dd {
+            margin-left: 40px;
+            margin-bottom: 5px;
+        }
+        
+        dt {
+            font-size: 20px;
+        }
+        
+        #marker-history {
+            z-index: 110;
+            position: absolute;
+            left: 37%;
+            top: 10%;
+            width: 420px;
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+<body id="body" class="layout-top-nav sidebar-closed sidebar-collapse" style="height: auto;">
+
+<div class="wrapper">
+
+    <!-- HEADER -->
+    <nav class="main-header navbar navbar-expand-md navbar-light navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                    <i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown mr-3 lead">
+                <h6 class="m-1" id="time" style="color: white;"></h6>
+            </li>
+        </ul>
+    </nav>
+    <!-- HEADER -->
+
+    <!-- SIDEBAR-->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="z-index: 1030;">
+
+        <a href="../../index3.html" class="brand-link">
+            <span class="brand-text font-weight-light">__Заглушка__</span>
+        </a>
+
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa-solid fa-industry"></i>
+                            <p style="color: white;">
+                                Фабрика
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: none;">
+                            <li class="nav-item" onclick="BuildClickSidebar('ГК БС')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>ГК БС</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('ГК МС')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>ГК МС</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Корпус сортировки')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Корпус сортировки</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Бункер приёмных углей')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Бункер приёмных углей</p>
+                                </a>
+                            </li>
+                            <li class="nav-item"
+                                onclick="BuildClickSidebar('Бункер погрузки автомобильным транспортом')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Бункер погрузки авто</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Бункер погрузки ж/д транспортом')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Бункер погрузки ж/д</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Конвейерная галерея А')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Конв-ая галерея А</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Конвейерная галерея Б')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Конв-ая галерея Б</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Конвейерная галерея В')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Конв-ая галерея В</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Конвейерная галерея Г')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Конв-ая галерея Г</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" onclick="BuildClickSidebar('Конвейерная галерея Д')">
+                                <a class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Конв-ая галерея Д</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="openPeopleInfo()">
+                            <i class="fa-solid fa-users"></i>
+                            <p style="color: white;">
+                                Персонал
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="openChoiceHistory()">
+                            <i class="fa-solid fa-book"></i>
+                            <p style="color: white;">
+                                История
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="openStats()">
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                            <p style="color: white;">
+                                Статистика
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="openSystem()">
+                            <i class="fa fa-sitemap" aria-hidden="true"></i>
+                            <p style="color: white;">
+                                Система
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </aside>
+    <!-- SIDEBAR-->
+
+    <!-- SIDEBAR-INFO-RIGHT-->
+    <aside class="sidebar-info sidebar-dark-primary elevation-4" id="sidebarShell" style="">
+        <a href="../../index3.html" class="brand-link">
+            <span class="brand-text font-weight-light">Заглушка</span>
+        </a>
+        <button type="button" class="close" id="dismiss" aria-label="Close">
+            <span aria-hidden="true" style="color: white">×</span>
+        </button>
+        <div class="sidebar-info-header">
+        </div>
+        <ul class="list-unstyled components">
+            <div id="sidebar-content-info">
+
+
+                <div id="sidebar-content-info-build">
+
+                    <h3 class="head-info-text" id="head-textBuild" style="color: white;">Здание</h3>
+
+                    <table id="textBuild" class="table" style="color: #FFFFFF;">
+                        <thead id="textBuild-table-head">
+                        <tr>
+                            <th scope="col" style="width: 80%; vertical-align: middle;">Отметка</th>
+                            <th scope="col">Кол-во сотрудников</th>
+                        </tr>
+                        </thead>
+                        <tbody id="textBuild-table-body">
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+        </ul>
+    </aside>
+    <!-- SIDEBAR-INFO-RIGHT-->
+
+    <!-- Marker, Person -->
+    <div id="markerOnBuild" style="">
+
+
+        <div id="marker-card" class="card card-gray-dark">
+
+            <div id="marker-head" class="bg-dark" style="padding: 10px;">
+                <button type="button" class="close"
+                        onclick="document.getElementById('markerOnBuild').style.display = 'none'">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+                <p id="number-people" style="float: left; margin-bottom: 0px;">NN</p>
+
+                <!--display: none-->
+                <div id="staff-buttons" class="" style="text-align: center;">
+                    <button id="btn-allPeople" class="btn btn-outline-secondary"
+                            style="color: #fff; padding-right: 28px; padding-left: 28px" onclick="clickBtnPeople(1)">Все
+                    </button>
+                    <button id="btn-presentPeople" class="btn btn-outline-secondary" style="color: #fff;"
+                            onclick="clickBtnPeople(2)">На объекте
+                    </button>
+                    <button id="btn-absentPeople" class="btn btn-outline-secondary" style="color: #fff;"
+                            onclick="clickBtnPeople(3)">Вне объекта
+                    </button>
+                </div>
+
+                <p id="marker-name" style="text-align: center; margin-bottom: 0px;">Отметка</p>
+            </div>
+
+            <div id="marker-scroll-control" class="dataTables_wrapper">
+
+                <!--<table id="marker-table" class="table-light table-hover">-->
+                <table id="marker-table" class="table-light table-hover dataTable display">
+                    <thead id="marker-table-head">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" style="text-align: left; width: 75%">ФИО</th>
+                    </tr>
+                    </thead>
+                    <tbody id="marker-table-body">
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div id="person-card" class="card card-gray-dark">
+
+            <div id="person-head" class="card-header bg-dark" style="padding: 10px;">
+                <button id="marker-close" type="button" class="close"
+                        onclick="document.getElementById('markerOnBuild').style.display = 'none'">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+                <a type="button" id="back_arrow"
+                   style="float: left; margin-bottom: 0px; padding-right: 10px; color: white; display: none">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a id="person-info" class="nav-link" onclick="onclickPersonInfo()">Информация</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="person-history" class="nav-link" onclick="onclickPersonHistory()">История</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="person-history-buttons" class=""
+                 style="text-align: center; margin-top: 10px; display: table-column">
+                <button id="btn-hour" class="btn btn-outline-secondary" style="" onclick="openHistory(2)">Час</button>
+                <button id="btn-day" class="btn btn-outline-secondary" style="" onclick="openHistory(3)">День</button>
+                <button id="btn-week" class="btn btn-outline-secondary" style="" onclick="openHistory(4)">Неделя
+                </button>
+                <button id="btn-month" class="btn btn-outline-secondary" style="" onclick="openHistory(5)">Месяц
+                </button>
+            </div>
+            <h5 class="card-title" id="person-name" style="text-align: center; margin-bottom: 7px;">ФИО</h5>
+
+            <div id="statusRow" style="margin: 0px">
+                <div id="avatarRow" style="align-self: center; padding-left: 10px">
+                    <img class="profile-user-img" src="{% static 'SiberiaApp/img/avatar.jpg' %}">
+                </div>
+                <div id="person-scroll-control">
+                    <table id="person-table" class="table-light table-hover">
+                        <thead id="person-table-head">
+                        </thead>
+                        <tbody id="person-table-body">
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- end Marker, Person -->
+
+
+    {% comment %}<div id="choice-history" class="bg-dark" style="">
+
+        <div class="bg-dark" style="padding: 10px; display:flex; flex-direction: row-reverse">
+            <button type="button" class="close" onclick="closeChoiceHistory()" style="">
+                <span aria-hidden="true" style="color: white;">&times;</span>
+            </button>
+            <p style="text-align: center; margin-bottom: 0px;"></p>
+        </div>
+        <div id="choice-history-wrapper" style="display: flex; justify-content: space-around;">
+
+
+                <button class="btn btn-outline-secondary" style="width: 160px; height: 160px;" onclick="">
+                     <i class="fa-solid fa-industry" style="font-size: 55px; padding: 10px"></i>
+                    <p style="font-size: 20px;">Предприятие<p>
+                </button>
+                <button class="btn btn-outline-secondary" style="width: 160px; height: 160px;" onclick="openPeopleHistories()">
+                    <i class="fa fa-users" style="font-size: 55px; padding: 10px"></i>
+                    <p style="font-size: 20px;">Сотрудники<p>
+                </button>
+
+        </div>
+    </div>{% endcomment %}
+
+    <div id="choice-history" style="">
+        <div class="card card-gray-dark bg-dark">
+            <div class="" style="padding: 10px;">
+                <button type="button" class="close" onclick="closeChoiceHistory()">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+            </div>
+            <div id="choice-history-wrapper" style="text-align: center;">
+                <button class="btn btn-dark" style="width: 160px; height: 160px; margin: 10px 20px 50px;"
+                        onclick="openFabricHistory()">
+                    <i class="fa-solid fa-industry" style="font-size: 55px; padding: 10px"></i>
+                    <p style="font-size: 20px;">Предприятие
+                    <p>
+                </button>
+                <button class="btn btn-outline-secondary"
+                        style="width: 160px; height: 160px; margin: 10px 20px 50px; color: #fff;"
+                        onclick="openPeopleHistories()">
+                    <i class="fa fa-users" style="font-size: 55px; padding: 10px"></i>
+                    <p style="font-size: 20px;">Сотрудники
+                    <p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="fabric-history" style="">
+        <div class="card card-gray-dark">
+            <div class="bg-dark" style="padding: 10px;">
+                <button type="button" class="close" onclick="closeFabricHistory()">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+                <p style="text-align: center; margin-bottom: 0px;">История объектов</p>
+            </div>
+            <div id="fabric-history-content" style="padding: 20px; overflow-y: scroll">
+                <dl>
+                    <dt>ГК БС</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="openMarkerHistory(1, 'ГК БС', '0')">
+                            0
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            1000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            4000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            8000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            12000
+                        </button>
+                    </dd>
+                    <dt>ГК МС</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            0
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            1000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            4000
+                        </button>
+                    </dd>
+                    <dt>Корпус сортировки</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            0
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            4000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            8000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            12000
+                        </button>
+                    </dd>
+                    <dt>Бункер приёмных углей</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            12000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            16000
+                        </button>
+                    </dd>
+                    <dt>Бункер погрузки авто</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            3500
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            7500
+                        </button>
+                    </dd>
+                    <dt>Бункер погрузки ж/д</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            3500
+                        </button>
+                    </dd>
+                    <dt>Конв-ая галерея А</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            4000
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            7500
+                        </button>
+                    </dd>
+                    <dt>Конв-ая галерея Б</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            0
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            3500
+                        </button>
+                    </dd>
+                    <dt>Конв-ая галерея В</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            8000
+                        </button>
+                    </dd>
+                    <dt>Конв-ая галерея Г</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            12000
+                        </button>
+                    </dd>
+                    <dt>Конв-ая галерея Д</dt>
+                    <dd>
+                        <button type="button" class="btn btn-secondary" onclick="">
+                            0
+                        </button>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div id="marker-history" style="">
+        <div class="card card-gray-dark" style="padding-bottom: 20px;">
+            <div class="bg-dark" style="padding: 10px;">
+                <button type="button" class="close" onclick="closeMarkerHistory()">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+                <p id="marker-history-name" style="text-align: center; margin-bottom: 0px;">Имя</p>
+            </div>
+            <div id="marker-history-buttons" class=""
+                 style="text-align: center; margin-top: 10px; display: table-column">
+                <button id="marker-btn-hour" class="btn btn-outline-secondary" style="" onclick="openHistory(2)">Час</button>
+                <button id="marker-btn-day" class="btn btn-outline-secondary" style="" onclick="openHistory(3)">День</button>
+                <button id="marker-btn-week" class="btn btn-outline-secondary" style="" onclick="openHistory(4)">Неделя
+                </button>
+                <button id="marker-btn-month" class="btn btn-outline-secondary" style="" onclick="openHistory(5)">Месяц
+                </button>
+            </div>
+            <div id="marker-history-scroll-control">
+                <table id="marker-history-table" class="table-light table-hover">
+                    <thead id="marker-history-table-head">
+                    </thead>
+                    <tbody id="marker-history-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div id="statistics-container" style="">
+        <div class="card card-gray-dark">
+            <div class="bg-dark" style="padding: 10px;">
+                <button type="button" class="close" onclick="closeStats()">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+                <p style="text-align: center; margin-bottom: 0px;">Статистика</p>
+            </div>
+            <div id="statistics-content" style="padding: 20px;"></div>
+        </div>
+    </div>
+
+
+    <div id="system" class="" style="">
+        <div class="card card-gray-dark">
+            <div class="bg-dark" style="padding: 10px; font-size: 24px">
+                <button type="button" class="close" onclick="closeSystem()">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+                <p style="text-align: center; margin-bottom: 0px;">Система</p>
+            </div>
+            <div id="system-content" style="padding: 20px; font-size: 18px"></div>
+        </div>
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="content-wrapper" style=" margin: 0; padding: 0">
+
+        <div class="content" style="background-color: #FFFFFF; margin: 0; padding: 0">
+            <div class="container" style="margin: 0; padding: 10px">
+                <div id="vision" style="display: flex; justify-content: center; z-index:1;">
+                    <canvas id="canvas"
+                            style="z-index:1; position: absolute; left: 0px; transform-origin: left top; transform: matrix(1, 0, 0, 1, 0, 0);"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- CONTENT -->
+
+
+    <div class="overlay"></div>
+
+</div>
+
+<script src="{% static 'SiberiaApp/adminlte/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/sparklines/sparkline.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/dist/js/adminlte.js?v=3.2.0' %}"></script>
+
+<script src="{% static 'SiberiaApp/adminlte/dist/js/pages/dashboard.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+<!-- Clock script --> <!---->
+<script>
+    function clock() {
+        var d = new Date();
+        var day = d.getDate();
+        var hrs = d.getHours();
+        var min = d.getMinutes();
+        var sec = d.getSeconds();
+
+        var mnt = new Array("января", "февраля", "марта", "апреля", "мая",
+            "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря");
+
+        if (day <= 9) day = "0" + day;
+        if (hrs <= 9) hrs = "0" + hrs;
+        if (min <= 9) min = "0" + min;
+        if (sec <= 9) sec = "0" + sec;
+        /*
+        $("#time").html("Время: " + hrs + ":" + min + ":" + sec + "&nbsp;&nbsp;&nbsp;" +
+            day + " " + mnt[d.getMonth()] + " " + d.getFullYear() + " г.");
+        */
+        /*
+        $("#time").html("Время: " + 14 + ":" + min + ":" + sec + "&nbsp;&nbsp;&nbsp;" +
+            15 + " " + mnt[4] + " " + d.getFullYear() + " г.");
+
+         */
+    }
+
+    /*
+        $(document).ready(function () {
+            clock()
+            setInterval("clock()", 1000);
+        });
+    */
+</script>
+
+
+<!-- Draw Map script -->
+<script>
+
+    var element = $('#canvas'),
+        canvas = new fabric.Canvas(element.get(0), {
+            selection: false,
+            scale: 1,
+            moveCursor: 'default',
+            hoverCursor: 'default',
+        });
+
+    var map_left_x = 0;
+    var map_top_y = 0;
+
+    var baseWidth = 0, // начальная ширина
+        baseHeight = 0, // начальная высота
+        baseScale = 1, // начальный масштаб
+
+        width = 0, // текущая ширина
+        height = 0, // текущая высота
+        transX = 0, // текущее смещение по оси x
+        transY = 0, // текущее смещение по оси y
+        scale = 1; // текущий масштаб в целом
+
+    var applyTransform = function () {
+        var maxTransX,
+            maxTransY,
+            minTransX,
+            minTransY,
+            group;
+
+        if (baseWidth * scale <= width) {
+            maxTransX = (width - baseWidth * scale) / (2 * scale);
+            minTransX = (width - baseWidth * scale) / (2 * scale);
+        } else {
+            // Не влазит
+            maxTransX = 0;
+            minTransX = (width - baseWidth * scale) / scale;
+        }
+
+        if (transX > maxTransX) {
+            transX = maxTransX;
+        } else if (transX < minTransX) {
+            transX = minTransX;
+        }
+
+        if (baseHeight * scale <= height) {
+            maxTransY = (height - baseHeight * scale) / (2 * scale);
+            minTransY = (height - baseHeight * scale) / (2 * scale);
+        } else {
+            maxTransY = 0;
+            minTransY = (height - baseHeight * scale) / scale;
+        }
+        if (transY > maxTransY) {
+            transY = maxTransY;
+        } else if (transY < minTransY) {
+            transY = minTransY;
+        }
+
+        group = new fabric.Group(canvas.getObjects());
+        group.scaleX = scale / canvas.scale;
+        group.scaleY = scale / canvas.scale;
+        group.left = transX * scale;
+        group.top = transY * scale;
+
+        group.destroy();
+
+        canvas.scale = scale;
+        canvas.renderAll();
+    };
+
+    DrawMap('{% static 'SiberiaApp/img/main3D.jpg' %}')
+
+    function DrawMap(path) {
+
+        baseWidth = 0;
+        baseHeight = 0;
+        baseScale = 1;
+
+        transX = 0;
+        transY = 0;
+        scale = 1;
+
+        width = 1280 - 20; //!!! Изменение размеров canvas
+        height = 540 - 80; //!!!
+        //width = window.innerWidth - 20; //!!! Изменение размеров canvas
+        //height = window.innerHeight - 80; //!!!
+
+        document.getElementById("vision").style.opacity = 0;
+        document.getElementById("body").style.overflow = "hidden";
+
+        canvas.clear();
+        canvas.scale = scale;
+        fabric.util.loadImage(path, function (img) {
+            map = new fabric.Image(img);
+            var curBaseScale;
+
+            baseWidth = map.width;
+            baseHeight = map.height;
+
+            map.set({
+                hasRotatingPoint: false,
+                hasBorders: false,
+                hasControls: false,
+                lockScalingY: true,
+                lockScalingX: true,
+                selectable: false,
+                left: map.width,
+                top: map.height,
+                originX: 'center',
+                originY: 'center'
+            });
+
+            canvas.add(map);
+
+
+            // Отмасштабируем, чтобы сразу видеть всю карту
+            curBaseScale = baseScale;
+            if (width / height > baseWidth / baseHeight) {
+                baseScale = height / baseHeight;
+            } else {
+                baseScale = width / baseWidth;
+            }
+            scale *= baseScale / curBaseScale;
+            transX *= baseScale / curBaseScale;
+            transY *= baseScale / curBaseScale;
+
+            canvas.setWidth(width);
+            canvas.setHeight(height);
+
+            applyTransform();
+        });
+    };
+
+    var sites_name = new Map();
+    var tags_on_map = new Map();
+
+    var counterGroup;
+    var activeCounter;
+    var last_activeCounter;
+
+    var activeZone;
+    var last_activeZone;
+
+
+    var Zone = function (point, widthZone, heightZone, angleZone, leftText, topText, angleText, sizeText, text, name_group) {
+
+
+        var marker = new fabric.Rect({
+            left: point.x,
+            top: point.y,
+            width: widthZone,
+            height: heightZone,
+            angle: angleZone,
+            opacity: 0,
+            //    opacity: 1,
+            strokeWidth: 1,
+            fill: '#000000',
+            selectable: false,
+            text: 'not active',
+        });
+
+        var ZoneGroup = new fabric.Group([marker], {
+            scaleX: scale,
+            scaleY: scale,
+            selectable: false,
+            text: name_group,
+            //selectable: true,
+            //uniScaleTransform: true,
+        });
+
+        canvas.add(ZoneGroup);
+        sites_name.set(name_group, ZoneGroup);
+        tags_on_map.set(name_group, []);
+
+        last_activeZone = marker;
+
+        canvas.on('mouse:down', function (options) {
+
+            if (options.target.get('text') == name_group) {
+                BuildClick(ZoneGroup, name_group);
+            }
+        });
+    };
+
+    var last_activeZone_name;
+
+    function BuildClick(ZoneGroup, name_group) {
+
+        last_activeZone.set('text', 'not active');
+        ZoneGroup.item(0).set('text', 'active');
+
+        openBuildForm(name_group, buildsAndMarkers.get(name_group));
+
+        last_activeZone = ZoneGroup.item(0);
+        last_activeZone_name = name_group;
+
+        canvas.renderAll();
+
+    }
+
+
+    function BuildClickSidebar(name_group) {
+        openBuildForm(name_group, buildsAndMarkers.get(name_group));
+    }
+
+
+    function getInfoTest(person_name, build_name, marker_name, hour, minute, second) {
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'giveInfoTest/ajax/', // путь к обработчику
+            data: {
+                "person_name": person_name,
+                "marker_name": marker_name,
+                "build_name": build_name,
+                "hour": hour,
+                "minute": minute,
+                "second": second
+            },
+            success: function (response) {
+                if (response.change == true) activeChange()
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr)
+            }
+        });
+    }
+
+
+    function activeChange() {
+
+        if (document.getElementById("sidebar-content-info-build").style.display == "block")
+            openBuildForm(last_activeZone_name, buildsAndMarkers.get(last_activeZone_name));
+        if (document.getElementById("markerOnBuild").style.display == "block") {
+            if (document.getElementById("marker-card").style.display == "flex")
+                openPeopleForm_enter(last_nameMap, last_mass);
+            else if (document.getElementById("person-card").style.display == "flex") {
+                if (last_selection == 1) getPerson(last_namePerson)
+                openPersonForm(last_namePerson, last_selection);
+            }
+        }
+
+    }
+
+
+    /*
+    function getInfo() {
+        cmd = 'refresh';
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'cybercode/ajax/', // путь к обработчику
+            data: {
+                "cmd": cmd
+            },
+            success: function (data) {
+                for (index = data.length - 1; index >= 0; --index) {
+                    name_counter = data[index].site_name
+                    tag_counter = sites_name.get(name_counter)._objects[1]
+                    len_array_tag = data[index].sn.length
+                    tag_sn = data[index].sn
+                    tag_counter.set({ text: len_array_tag.toString() })
+                    tags_on_map.set(name_counter, tag_sn)
+
+                    if (sites_name.get(name_counter)._objects[0].text == 'active')
+                    {
+                        openPeopleForm_enter(name_counter, tags_on_map.get(name_counter));
+                    }
+
+                    canvas.renderAll()
+                }
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr)
+            }
+        });
+    }
+*/
+
+
+    /*
+        function getTag() {
+            cmd = 'refresh';
+            $.ajax({
+                type: 'GET', // метод отправки
+                url: 'cybercode/ajax/', // путь к обработчику
+                data: {
+                    "cmd": cmd
+                },
+                success: function (data) {
+                    for (index = data.length - 1; index >= 0; --index) {
+                        name_counter = data[index].site_name
+                        tag_counter = sites_name.get(name_counter)._objects[1]
+                        len_array_tag = data[index].sn.length
+                        tag_sn = data[index].sn
+                        tag_counter.set({ text: len_array_tag.toString() })
+                        tags_on_map.set(name_counter, tag_sn)
+
+                        if (sites_name.get(name_counter)._objects[0].text == 'active')
+                        {
+                            openPeopleForm_enter(name_counter, tags_on_map.get(name_counter));
+                        }
+
+                        canvas.renderAll()
+                    }
+                },
+                error: function (dataerr) {
+                    console.log('Ошибка выполнение команды :' + dataerr)
+                }
+            });
+        }
+    */
+
+    var namep;
+    var workp;
+    var placep;
+    var markerp;
+
+
+    function getPerson(name) {
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'search/ajax/', // путь к обработчику
+            async: false,
+            data: {
+                "person_name": name,
+            },
+            success: function (response) {
+                namep = response.name;
+                workp = response.work;
+                placep = response.place;
+                markerp = response.marker;
+                console.log('JS :' + response);
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr)
+            }
+        });
+    }
+
+
+    function getNumberPeopleOnMarker(build_name, marker_name) {
+        var temp;
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'counterPeopleOnMarker/ajax/', // путь к обработчику
+            async: false,
+            data: {
+                "marker_name": marker_name,
+                "build_name": build_name
+            },
+            success: function (response) {
+                temp = response.count;
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr);
+                temp = 0;
+            }
+        });
+        return temp
+    }
+
+
+    var temp_count;
+    var temp_all_count;
+
+    function getPeopleOnMarker(build_name, marker_name) {
+        var temp = [];
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'peopleOnMarker/ajax/', // путь к обработчику
+            async: false,
+            data: {
+                "marker_name": marker_name,
+                "build_name": build_name
+            },
+            success: function (response) {
+                temp_count = response.count;
+                for (index = 0; index <= response.people.length; index++) {
+                    temp.push(response.people[index]['FIO_text']);
+                }
+
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr);
+            }
+        });
+        return temp
+    }
+
+    function getHistory(name, time) {
+        var temp_mass = [];
+        var temp;
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'needHistory/ajax/', // путь к обработчику
+            async: false,
+            data: {
+                "person_name": name,
+                "section": time,
+            },
+            success: function (response) {
+                for (var index = 0; index <= response.history.length; index++) {
+                    temp = response.history[index]['place_text'] + ", " + response.history[index]['marker_text'];
+                    temp_mass.unshift(temp);
+                    temp = response.history[index]['time_date'].replace(/[a-z]/gi, ' ');
+                    temp_mass.unshift(temp);
+                }
+                console.log('JS :' + response);
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr)
+            }
+        });
+        return temp_mass
+    }
+
+    function getPeople() {
+        var temp_mass = [];
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'allpeople/ajax/', // путь к обработчику
+            async: false,
+            success: function (response) {
+                temp_all_count = response.count;
+                for (index = 0; index <= response.people.length; index++) {
+                    temp_mass.push(response.people[index]['FIO_text']);
+                }
+
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr);
+            }
+        });
+        return temp_mass
+    }
+
+
+    function getSystem() {
+        var temp;
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'check_api_connection/ajax/', // путь к обработчику
+            async: false,
+            success: function (response) {
+                temp = response;
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr);
+            }
+        });
+        return temp
+    }
+    
+    function getHistoryMarker(nameB, nameM, time) {
+        var temp_mass = [];
+        var temp;
+        $.ajax({
+            type: 'GET', // метод отправки
+            url: 'needHistoryMarker/ajax/', // путь к обработчику
+            async: false,
+            data: {
+                "build_name": nameB,
+                "marker_name": nameM,
+                "section": time,
+            },
+            success: function (response) {
+                for (var index = 0; index <= response.history.length; index++) {
+                    temp = response.history[index]['FIO_text'];
+                    temp_mass.unshift(temp);
+                    temp = response.history[index]['time_date'].replace(/[a-z]/gi, ' ');
+                    temp_mass.unshift(temp);
+                }
+                console.log('JS :' + response);
+            },
+            error: function (dataerr) {
+                console.log('Ошибка выполнение команды :' + dataerr)
+            }
+        });
+        return temp_mass
+    }
+
+
+</script>
+
+
+<!-- Start program -->
+<script>
+
+    var buildsAndMarkers = new Map();
+
+    buildsAndMarkers.set('ГК БС', ['ГК БС0', 'ГК БС1000', 'ГК БС4000', 'ГК БС8000', 'ГК БС12000']);
+    buildsAndMarkers.set('ГК МС', ['ГК МС0', 'ГК МС1000', 'ГК МС4000']);
+    buildsAndMarkers.set('Корпус сортировки', ['Корпус сортировки0', 'Корпус сортировки4000', 'Корпус сортировки8000', 'Корпус сортировки12000']);
+    buildsAndMarkers.set('Бункер приёмных углей', ['Бункер приёмных углей12000', 'Бункер приёмных углей16000']);
+    buildsAndMarkers.set('Бункер погрузки автомобильным транспортом', ['Бункер погрузки автомобильным транспортом3500', 'Бункер погрузки автомобильным транспортом7500']);
+    buildsAndMarkers.set('Бункер погрузки ж/д транспортом', ['Бункер погрузки ж/д транспортом3500']);
+    buildsAndMarkers.set('Конвейерная галерея А', ['Конвейерная галерея А4000', 'Конвейерная галерея А7500']);// гк бс + авто
+    buildsAndMarkers.set('Конвейерная галерея Б', ['Конвейерная галерея Б0', 'Конвейерная галерея Б3500']);// гк мс + жд
+    buildsAndMarkers.set('Конвейерная галерея В', ['Конвейерная галерея В8000']);// гк бс + сортировка
+    buildsAndMarkers.set('Конвейерная галерея Г', ['Конвейерная галерея Г12000']);// сортировка + приемн
+    buildsAndMarkers.set('Конвейерная галерея Д', ['Конвейерная галерея Д0']);// пересып отходов
+
+
+    var tags_name = new Map();
+
+    tags_name.set('ГК БС0', '0');
+    tags_name.set('ГК БС1000', '1000');
+    tags_name.set('ГК БС4000', '4000');
+    tags_name.set('ГК БС8000', '8000');
+    tags_name.set('ГК БС12000', '12000');
+
+    tags_name.set('ГК МС0', '0');
+    tags_name.set('ГК МС1000', '1000');
+    tags_name.set('ГК МС4000', '4000');
+
+    tags_name.set('Корпус сортировки0', '0');
+    tags_name.set('Корпус сортировки4000', '4000');
+    tags_name.set('Корпус сортировки8000', '8000');
+    tags_name.set('Корпус сортировки12000', '12000');
+
+    tags_name.set('Бункер приёмных углей12000', '12000');
+    tags_name.set('Бункер приёмных углей16000', '16000');
+
+    tags_name.set('Бункер погрузки автомобильным транспортом3500', '3500');
+    tags_name.set('Бункер погрузки автомобильным транспортом7500', '7500');
+
+    tags_name.set('Бункер погрузки ж/д транспортом3500', '3500');
+
+    tags_name.set('Конвейерная галерея А4000', '4000');
+    tags_name.set('Конвейерная галерея А7500', '7500');
+
+    tags_name.set('Конвейерная галерея Б0', '0');
+    tags_name.set('Конвейерная галерея Б3500', '3500');
+
+    tags_name.set('Конвейерная галерея В8000', '8000');
+
+    tags_name.set('Конвейерная галерея Г12000', '12000');
+
+    tags_name.set('Конвейерная галерея Д0', '0');
+
+
+    var location;
+
+    var testvar;
+
+    function adaptive() {
+        width = window.innerWidth - 20; //!!!
+        height = window.innerHeight - 80; //!!!
+        var curBaseScale;
+        baseWidth = map.width;
+        baseHeight = map.height;
+        // Отмасштабируем, чтобы сразу видеть всю карту
+        curBaseScale = baseScale;
+        if (width / height > baseWidth / baseHeight) {
+            baseScale = height / baseHeight;
+        } else {
+            baseScale = width / baseWidth;
+        }
+
+        scale *= baseScale / curBaseScale;
+        transX *= baseScale / curBaseScale;
+        transY *= baseScale / curBaseScale;
+
+        canvas.setWidth(width);
+        canvas.setHeight(height);
+
+        applyTransform();
+    }
+
+    function test() {
+        console.log('test');
+    }
+
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    window.onload = function () {
+
+        Zone({x: 500, y: 20}, 170, 120, 45, 150, 250, 45, 5, '5', 'ГК БС');
+        Zone({x: 430, y: 120}, 110, 80, 45, 150, 250, 45, 5, '5', 'ГК МС');
+        Zone({x: 690, y: 110}, 130, 80, 20, 250, 225, 0, 5, '5', 'Корпус сортировки');
+        Zone({x: 1050, y: 0}, 120, 120, 0, 10, 50, 0, 5, '5', 'Бункер приёмных углей');
+        Zone({x: 295, y: 40}, 60, 40, 0, 25, 255, 270, 5, '5', 'Бункер погрузки автомобильным транспортом');
+        Zone({x: 110, y: 235}, 50, 50, 0, 5, 6, 0, 5, '5', 'Бункер погрузки ж/д транспортом');
+        Zone({x: 320, y: 80}, 50, 50, 0, 5, 5, 0, 5, '5', 'Конвейерная галерея А');
+        Zone({x: 170, y: 220}, 210, 70, 0, 5, 60, 0, 5, '5', 'Конвейерная галерея Б');
+        Zone({x: 575, y: 170}, 110, 40, 30, 5, 60, 0, 5, '5', 'Конвейерная галерея В');
+        Zone({x: 790, y: 190}, 310, 35, -20, 5, 60, 0, 5, '5', 'Конвейерная галерея Г');
+        Zone({x: 330, y: 400}, 390, 35, -15, 5, 60, 0, 5, '5', 'Конвейерная галерея Д');
+
+        locationBuild = '-';
+        locationMarker = '-';
+        testvar = 1;
+
+        adaptive();
+
+        document.getElementById("vision").style.opacity = 1;
+        document.getElementById("body").style.overflow = "auto";
+
+
+        console.log('window.innerWidth :' + window.innerWidth)
+        console.log('window.innerHeight :' + window.innerHeight)
+    }
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+</script>
+
+
+<!--&lt;!&ndash; Sidebar-info collapse code-->
+<script type="text/javascript">
+
+    let table = new DataTable('#marker-table', {
+        info: false,
+        ordering: false,
+        paging: false,
+        language: {
+            search: 'Поиск:'
+        }
+    });
+
+
+    table.on('click', 'tbody tr', function () {
+        let data = table.row(this).data();
+
+        if (func == 1) FuncClickPerson(data[1])
+        else FuncClickPersonHistory(data[1]);
+
+        {% comment %}alert('You clicked on ' + data[1] + "'s row");{% endcomment %}
+    });
+
+
+    var locationBuild = "-";
+    var locationMarker = "-";
+
+    var func;
+    var last_nameMap;
+    var last_mass;
+
+    $(document).ready(function () {
+
+        document.getElementById('markerOnBuild').style.display = 'none'
+
+        $('#dismiss, .overlay').on('click', function () {
+            last_activeZone.set('fill', 'black');
+            last_activeZone.set('text', 'not active');
+            $('#sidebarShell').removeClass('active');
+            $('.overlay').removeClass('active');
+            canvas.renderAll();
+        });
+
+        $('#back_arrow').on('click', function () {
+            if (func == 1) openPeopleForm(last_nameMap, last_mass)
+            else openPeopleHistories();
+            showNumberPeople();
+        });
+
+        $('#sidebarInfoCollapse').on('click', function () {
+            $('#sidebarShell').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').collapse('hide');
+        });
+
+
+        $('#marker-close').on('click', function () {
+            showNumberPeople();
+        });
+
+    });
+
+    function showNumberPeople() {
+        document.getElementById("back_arrow").style.display = "none";
+        document.getElementById("number-people").style.display = "block";
+    }
+
+    var last_selection;
+    var last_namePerson;
+
+
+    // Person
+    function openPersonForm(namePerson, selection) {
+        last_selection = selection;
+        last_namePerson = namePerson;
+        document.getElementById("markerOnBuild").style.display = "block";
+        document.getElementById("person-card").style.display = "flex";
+        document.getElementById("marker-card").style.display = "none";
+        document.getElementById("back_arrow").style.display = "block";
+        document.getElementById("number-people").style.display = "none";
+        
+        var buttons = document.getElementById("person-history-buttons");
+        var table = document.getElementById("person-table");
+        var table_control = document.getElementById("person-scroll-control");
+        var name = document.getElementById("person-name");
+        name.textContent = namePerson;
+
+        var head = document.getElementById("person-table-head");
+        head.innerHTML = "";
+        var body = document.getElementById("person-table-body");
+        body.innerHTML = "";
+
+
+        var btnHour = document.getElementById("btn-hour");
+        var btnDay = document.getElementById("btn-day");
+        var btnWeek = document.getElementById("btn-week");
+        var btnMonth = document.getElementById("btn-month");
+        btnHour.classList.remove("active");
+        btnDay.classList.remove("active");
+        btnWeek.classList.remove("active");
+        btnMonth.classList.remove("active");
+
+        var statusRow = document.getElementById("statusRow");
+        var avatarRow = document.getElementById("avatarRow");
+
+
+        if (selection == 1) {
+            buttons.style.display = "none";
+            name.style.display = "none";
+
+            table.setAttribute("style", "margin-top: 20px");
+            table_control.setAttribute("style", "padding-left: 0px; padding-right: 0px");
+
+            statusRow.style.flexWrap = "nowrap";
+            avatarRow.style.display = "block";
+            statusRow.classList.add('row');
+
+            var tr3 = document.createElement("tr");
+            var th3 = document.createElement("th");
+            var td3 = document.createElement("td");
+            var tr4 = document.createElement("tr");
+            var th4 = document.createElement("th");
+            var td4 = document.createElement("td");
+            var tr5 = document.createElement("tr");
+            var th5 = document.createElement("th");
+            var td5 = document.createElement("td");
+
+            th3.innerHTML = 'Фамилия <br>Имя<br> Отчество';
+            th4.innerText = 'Должность';
+            th5.innerText = 'Местонахождение';
+
+            th3.setAttribute("style", "text-align: left");
+            //th3.setAttribute("style","width: 50%");
+            td3.innerText = namePerson;
+            tr3.setAttribute("scope", "row");
+            tr3.appendChild(th3);
+            tr3.appendChild(td3);
+            body.appendChild(tr3);
+
+            tr4.setAttribute("scope", "row");
+            td4.setAttribute("id", "work");
+            td4.innerText = workp;
+            tr4.appendChild(th4);
+            tr4.appendChild(td4);
+            th4.setAttribute("style", "text-align: left");
+            //th4.setAttribute("style","width: 50%");
+            body.appendChild(tr4);
+
+            tr5.setAttribute("scope", "row");
+            td5.setAttribute("id", "location");
+            th5.setAttribute("style", "padding-right: 10px");
+            //td5.innerText  = locationBuild + ", " + locationMarker;
+            td5.innerText = placep + ", " + markerp;
+            tr5.appendChild(th5);
+            tr5.appendChild(td5);
+            th5.setAttribute("style", "text-align: left");
+            body.appendChild(tr5);
+            th5.setAttribute("style", "padding-right: 10px");
+
+        } else {
+            table.setAttribute("style", "margin-top: 10px");
+            table_control.setAttribute("style", "padding-left: 10px; padding-right: 10px");
+            name.style.display = "block";
+            buttons.style.display = "block";
+
+            statusRow.style.flexWrap = "wrap";
+            avatarRow.style.display = "none";
+            statusRow.classList.remove('row');
+
+            var mass = [];
+            
+            if (selection == 2) {
+                mass = getHistory(namePerson, "hour");
+                if (!btnHour.classList.contains("active")) {
+                    btnHour.classList.add("active");
+                }
+                btnDay.classList.remove("active");
+                btnWeek.classList.remove("active");
+                btnMonth.classList.remove("active");
+            }
+            if (selection == 3) {
+                mass = getHistory(namePerson, "day");
+                if (!btnDay.classList.contains("active")) {
+                    btnDay.classList.add("active");
+                }
+                btnHour.classList.remove("active");
+                btnWeek.classList.remove("active");
+                btnMonth.classList.remove("active");
+            }
+            if (selection == 4) {
+                mass = getHistory(namePerson, "week");
+                if (!btnWeek.classList.contains("active")) {
+                    btnWeek.classList.add("active");
+                }
+                btnDay.classList.remove("active");
+                btnHour.classList.remove("active");
+                btnMonth.classList.remove("active");
+            }
+            if (selection == 5) {
+                mass = getHistory(namePerson, "month");
+                if (!btnMonth.classList.contains("active")) {
+                    btnMonth.classList.add("active");
+                }
+                btnDay.classList.remove("active");
+                btnWeek.classList.remove("active");
+                btnHour.classList.remove("active");
+            }
+
+            var tr = document.createElement("tr");
+            tr.setAttribute("scope", "row");
+            var thtime = document.createElement("th");
+            var thplace = document.createElement("th");
+            thtime.innerText = 'Дата и время';
+            thplace.innerText = 'Место';
+            tr.appendChild(thtime);
+            tr.appendChild(thplace);
+            body.appendChild(tr);
+
+            for (let i = 0; i < mass.length; i = i + 2) {
+                var p = document.createElement("td");
+                var p2 = document.createElement("td");
+                p.innerText = mass[i];
+                p2.innerText = mass[i + 1];
+                var trp = document.createElement("tr");
+                trp.setAttribute("scope", "row");
+                trp.appendChild(p);
+                trp.appendChild(p2);
+                body.appendChild(trp);
+            }
+
+        }
+
+        namep = undefined;
+    }
+
+
+    function openHistory(selection) {
+        var name = document.getElementById("person-name");
+        var namePerson = name.textContent;
+        openPersonForm(namePerson, selection);
+    }
+
+
+    // One Marker and mass people
+    function openPeopleForm(nameMap, mass) {
+        document.getElementById("markerOnBuild").style.display = "block";
+        func = 1;
+        openPeopleForm_enter(nameMap, mass);
+        showNumberPeople();
+        last_nameMap = nameMap;
+        last_mass = mass;
+    }
+
+
+    var numberPeople = document.getElementById("number-people");
+    var temp_mass_btnPeople;
+
+    function openPeopleForm_enter(nameMap, mass) {
+
+        document.getElementById("person-card").style.display = "none";
+        document.getElementById("marker-card").style.display = "flex";
+        var name = document.getElementById("marker-name");
+        name.style.display = "block";
+
+        var btn_staff = document.getElementById("staff-buttons");
+        btn_staff.style.display = "none";
+
+
+        if (func == 1) {
+            if (nameMap == "Список сотрудников") {
+                var temp_name = nameMap;
+                var temp_name_build = nameMap.replace(/[0-9]/g, '');
+                temp_people = mass;
+                numberPeople.textContent = temp_all_count + 20;
+                btn_staff.style.display = "block";
+                name.style.display = "none";
+                temp_mass_btnPeople = mass;
+                clickBtnPeople(1);
+
+            } else {
+                var temp_name = tags_name.get(nameMap);
+                var temp_name_build = nameMap.replace(/[0-9]/g, '');
+                var temp_people = getPeopleOnMarker(temp_name_build, temp_name);
+                numberPeople.textContent = temp_count;
+            }
+
+        } else {
+            var temp_name = nameMap;
+            var temp_name_build = nameMap.replace(/[0-9]/g, '');
+            temp_people = mass;
+            numberPeople.textContent = temp_all_count + 20;
+        }
+
+        name.textContent = temp_name;
+        
+
+        var head = document.getElementById("marker-table-head");
+        head.innerHTML = '<tr> <th scope="col">#</th><th scope="col" style="text-align: left; width: 75%">ФИО</th></tr>';
+
+        var body = document.getElementById("marker-table-body");
+        body.innerHTML = "";
+
+
+        table.clear();
+
+
+        for (let i = 0; i < temp_people.length; i++) {
+
+            table.row.add([
+                i + 1, temp_people[i]
+            ]).draw();
+
+        }
+        ;
+
+    }
+
+    function clickBtnPeople(selection) {
+        var btnAll = document.getElementById("btn-allPeople");
+        var btnPresent = document.getElementById("btn-presentPeople");
+        var btnAbsent = document.getElementById("btn-absentPeople");
+        btnAll.classList.remove("active");
+        btnPresent.classList.remove("active");
+        btnAbsent.classList.remove("active");
+        if (selection == 1) {
+            if (!btnAll.classList.contains("active")) {
+                btnAll.classList.add("active");
+                numberPeople.textContent = temp_all_count + 20;
+
+                table.clear();
+
+                for (let i = 0; i < temp_mass_btnPeople.length; i++) {
+
+                    table.row.add([
+                        i + 1, temp_mass_btnPeople[i]
+                    ]).draw();
+
+                }
+                ;
+            }
+        } else if (selection == 2) {
+            if (!btnPresent.classList.contains("active")) {
+                btnPresent.classList.add("active");
+                numberPeople.textContent = temp_all_count;
+
+                table.clear();
+
+                for (let i = 0; i < temp_mass_btnPeople.length; i++) {
+
+                    table.row.add([
+                        i + 1, temp_mass_btnPeople[i]
+                    ]).draw();
+                }
+                ;
+
+            }
+        } else {
+            if (!btnAbsent.classList.contains("active")) {
+                btnAbsent.classList.add("active");
+                numberPeople.textContent = "0";
+                table.clear().draw();
+            }
+        }
+    }
+
+
+    // Build and mass markers
+    function openBuildForm(nameBuild, mass) {
+        document.getElementById("sidebar-content-info-build").style.display = "block";
+        $('#sidebarShell').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').collapse('hide');
+        openBuildForm_enter(nameBuild, mass);
+    }
+
+    function openBuildForm_enter(nameBuild, mass) {
+
+        var head = document.getElementById("head-textBuild")
+        head.innerText = nameBuild;
+
+        var body = document.getElementById("textBuild-table-body");
+        body.innerHTML = "";
+
+        for (let i = 0; i < mass.length; i++) {
+            var tdName = document.createElement("td");
+            var tdPeople = document.createElement("td");
+            var tr = document.createElement("tr");
+            tr.id = mass[i];
+            var temp_name = tags_name.get(mass[i]);
+            tdName.innerText = temp_name;
+
+            tdPeople.innerText = getNumberPeopleOnMarker(nameBuild, temp_name);
+            /*
+            if (tags_on_map.has(mass[i])) {
+                tdPeople.innerText = getNumberPeopleOnMarker(nameBuild, temp_name);
+            }
+            else {
+                tdPeople.innerText = '0';
+            }
+            */
+            tdPeople.id = nameBuild + tags_name.get(mass[i]);
+            tr.setAttribute("onclick", "FuncClick(this.id)");
+            tr.appendChild(tdName);
+            tr.appendChild(tdPeople);
+            body.appendChild(tr);
+        }
+        ;
+    }
+
+    function FuncClick(element) {
+        console.log(element);
+        func = 1;
+        openPeopleForm(element, tags_on_map.get(element));
+    }
+
+
+    function FuncClickPerson(element) {
+        console.log(element);
+        getPerson(element);
+        startPersonInfo();
+        openPersonForm(element, 1);
+    }
+
+    function FuncClickPersonHistory(element) {
+        console.log(element);
+        getPerson(element);
+        startPersonHistory();
+        openPersonForm(element, 2);
+    }
+
+    function FuncTest() {
+        console.log("123");
+    }
+
+
+    function onclickPersonHistory() {
+        var name = document.getElementById("person-name");
+        var info = document.getElementById("person-info");
+        var history = document.getElementById("person-history");
+        if (!history.classList.contains("active")) {
+            history.classList.add("active");
+            info.classList.remove("active");
+            openPersonForm(name.textContent, 2);
+        }
+    }
+
+    function onclickPersonInfo() {
+        var name = document.getElementById("person-name");
+        var info = document.getElementById("person-info");
+        var history = document.getElementById("person-history");
+        if (!info.classList.contains("active")) {
+            info.classList.add("active");
+            history.classList.remove("active");
+            FuncClickPerson(name.textContent);
+        }
+    }
+
+    function startPersonHistory() {
+        var info = document.getElementById("person-info");
+        var history = document.getElementById("person-history");
+        if (!history.classList.contains("active")) {
+            history.classList.add("active");
+        }
+        info.classList.remove("active");
+    }
+
+    function startPersonInfo() {
+        var info = document.getElementById("person-info");
+        var history = document.getElementById("person-history");
+        if (!info.classList.contains("active")) {
+            info.classList.add("active");
+        }
+        history.classList.remove("active");
+    }
+
+    // all People histories
+    function openPeopleHistories() {
+        document.getElementById("markerOnBuild").style.display = "block";
+        var choice_btn = document.getElementById("choice-history");
+        choice_btn.style.display = "none";
+        func = 2;
+        var name = "Список сотрудников";
+        var mass = getPeople();
+        openPeopleForm_enter(name, mass);
+        showNumberPeople();
+        last_nameMap = name;
+        last_mass = mass;
+    }
+
+
+    function openPeopleInfo() {
+        document.getElementById("markerOnBuild").style.display = "block";
+        func = 1;
+        var name = "Список сотрудников";
+        var mass = getPeople();
+        openPeopleForm_enter(name, mass);
+        showNumberPeople();
+        last_nameMap = name;
+        last_mass = mass;
+    }
+
+    function openChoiceHistory() {
+        var choice_btn = document.getElementById("choice-history");
+        choice_btn.style.display = "block";
+    }
+
+    function closeChoiceHistory() {
+        var choice_btn = document.getElementById("choice-history");
+        choice_btn.style.display = "none";
+    }
+
+
+    var statusSystem;
+
+    function openSystem() {
+        var system_panel = document.getElementById("system");
+        system_panel.style.display = "block";
+        var system_content = document.getElementById("system-content");
+        //statusSystem = getSystem();
+        statusSystem = true;
+        if (statusSystem) {
+            system_content.innerHTML =
+                `<p><b>Система: </b> <span style="color: green;">функционирует</span></p>
+                <p><b>Соединение: </b> <span style="color: green;">установлено</span></p>
+                <p><span style="color: green;">Все анкера работают</span></p>
+                `
+        } else {
+            system_content.innerHTML =
+                `<p><b>Система: </b> <span style="color: red;">сбой</span></p>
+            <p><b>Соединение: </b> <span style="color: green;">установлено</span></p>
+            <p><span style="color: red;">Деактивирован анкер А12</span><p>
+            `
+        }
+    }
+
+    function closeSystem() {
+        var system_panel = document.getElementById("system");
+        system_panel.style.display = "none";
+    }
+
+    function getStatistics() {
+        var statistics = {};
+        // Здесь вам нужно получить данные для статистики из базы данных или другого источника
+        // и сформировать объект statistics, например:
+        statistics['ГК БС'] = 10;
+        statistics['ГК МС'] = 5;
+        statistics['Корпус сортировки'] = 7;
+        // и так далее для каждого здания
+
+        return statistics;
+    }
+
+    function displayStatistics(statistics) {
+        var statisticsContent = document.getElementById('statistics-content');
+        statisticsContent.innerHTML = '';
+
+        for (var building in statistics) {
+            var buildingDiv = document.createElement('div');
+            buildingDiv.textContent = building + ': ' + statistics[building] + ' человек';
+            statisticsContent.appendChild(buildingDiv);
+        }
+    }
+
+    function openStats() {
+        var statisticsContainer = document.getElementById('statistics-container');
+        statisticsContainer.style.display = 'block';
+
+        var statistics = getStatistics();
+        displayStatistics(statistics);
+    }
+
+    function closeStats() {
+        var statisticsContainer = document.getElementById('statistics-container');
+        statisticsContainer.style.display = 'none';
+    }
+
+    function openFabricHistory() {
+        closeChoiceHistory();
+        var fabric_history = document.getElementById("fabric-history");
+        fabric_history.style.display = "block";
+    }
+
+    function closeFabricHistory() {
+        var fabric_history = document.getElementById("fabric-history");
+        fabric_history.style.display = "none";
+    }
+    
+    function openMarkerHistory(selection, nameBuild, nameMarker) {
+        closeFabricHistory();
+        var marker_history = document.getElementById("marker-history");
+        marker_history.style.display = "block";
+        
+        var table = document.getElementById("marker-history-table");
+        var table_control = document.getElementById("marker-history-scroll-control");
+        
+        var name = document.getElementById("marker-history-name");
+        name.textContent = nameBuild + ", " + nameMarker;
+        
+        var head = document.getElementById("marker-history-table-head");
+        head.innerHTML = "";
+        var body = document.getElementById("marker-history-table-body");
+        body.innerHTML = "";
+        
+        var btnHour = document.getElementById("marker-btn-hour");
+        var btnDay = document.getElementById("marker-btn-day");
+        var btnWeek = document.getElementById("marker-btn-week");
+        var btnMonth = document.getElementById("marker-btn-month");
+        btnHour.classList.remove("active");
+        btnDay.classList.remove("active");
+        btnWeek.classList.remove("active");
+        btnMonth.classList.remove("active");
+        
+        var mass = [];
+            
+        if (selection == 1) {
+            mass = getHistoryMarker(nameBuild, nameMarker, "hour");
+            if (!btnHour.classList.contains("active")) {
+                btnHour.classList.add("active");
+            }
+            btnDay.classList.remove("active");
+            btnWeek.classList.remove("active");
+            btnMonth.classList.remove("active");
+        }
+        if (selection == 2) {
+            mass = getHistoryMarker(nameBuild, nameMarker, "day");
+            if (!btnDay.classList.contains("active")) {
+                btnDay.classList.add("active");
+            }
+            btnHour.classList.remove("active");
+            btnWeek.classList.remove("active");
+            btnMonth.classList.remove("active");
+        }
+        if (selection == 3) {
+            mass = getHistoryMarker(nameBuild, nameMarker, "week");
+            if (!btnWeek.classList.contains("active")) {
+                btnWeek.classList.add("active");
+            }
+            btnDay.classList.remove("active");
+            btnHour.classList.remove("active");
+            btnMonth.classList.remove("active");
+        }
+        if (selection == 4) {
+            mass = getHistoryMarker(nameBuild, nameMarker, "month");
+            if (!btnMonth.classList.contains("active")) {
+                btnMonth.classList.add("active");
+            }
+            btnDay.classList.remove("active");
+            btnWeek.classList.remove("active");
+            btnHour.classList.remove("active");
+        }
+
+        var tr = document.createElement("tr");
+        tr.setAttribute("scope", "row");
+        var thtime = document.createElement("th");
+        var thplace = document.createElement("th");
+        thtime.innerText = 'Дата и время';
+        thplace.innerText = 'ФИО';
+        tr.appendChild(thtime);
+        tr.appendChild(thplace);
+        body.appendChild(tr);
+
+        for (let i = 0; i < mass.length; i = i + 2) {
+            var p = document.createElement("td");
+            var p2 = document.createElement("td");
+            p.innerText = mass[i];
+            p2.innerText = mass[i + 1];
+            var trp = document.createElement("tr");
+            trp.setAttribute("scope", "row");
+            trp.appendChild(p);
+            trp.appendChild(p2);
+            body.appendChild(trp);
+        }
+        
+        table.setAttribute("style", "margin-top: 10px");
+        table_control.setAttribute("style", "padding-left: 10px; padding-right: 10px");
+        
+    }
+    
+    function closeMarkerHistory() {
+        var marker_history = document.getElementById("marker-history");
+        marker_history.style.display = "none";
+    }
+    
+
+</script>
+
+</body>
+</html>

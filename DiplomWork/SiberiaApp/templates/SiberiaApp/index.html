@@ -1,0 +1,894 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru" style="height: auto;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <!---->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/fontawesome-free/css/all.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!---->
+    <link rel="stylesheet"
+          href="{% static 'SiberiaApp/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/jqvmap/jqvmap.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/dist/css/adminlte.min.css?v=3.2.0' %}">
+    <!---->
+    <link rel="stylesheet"
+          href="{% static 'SiberiaApp/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/daterangepicker/daterangepicker.css' %}">
+    <!---->
+    <link rel="stylesheet" href="{% static 'SiberiaApp/adminlte/plugins/summernote/summernote-bs4.min.css' %}">
+    <!---->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <script src="https://kit.fontawesome.com/2b12c95849.js" crossorigin="anonymous"></script>
+
+    <script src="{% static 'SiberiaApp/fabric/fabric.js' %}"></script>
+    <script src="{% static 'SiberiaApp/mousewheel/jquery.mousewheel.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <style>
+        #sidebarShell {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            right: -250px;
+            height: 100vh;
+            z-index: 999;
+
+            transition: all 0.3s;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        #sidebarShell.active {
+            right: 0;
+        }
+
+        #dismiss {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            position: absolute;
+            top: 65px;
+            right: 10px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        #dismiss:hover {
+
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            /* full screen */
+            width: 100vw;
+            height: 100vh;
+            /* middle layer, i.e. appears below the sidebar */
+            z-index: 998;
+            opacity: 0;
+            /* animate the transition */
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* display .overlay when it has the .active class */
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        #sidebarShell .sidebar-info-header {
+            padding: 20px 20px 10px;
+            text-align: center;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+
+<body class="layout-top-nav sidebar-closed sidebar-collapse" style="height: auto;">
+
+<div class="wrapper">
+
+    <!-- HEADER -->
+    <nav class="main-header navbar navbar-expand-md navbar-light navbar-dark">
+        <!--<div class="container">-->
+        <!--<div class="collapse navbar-collapse" id="navbarCollapse" style="z-index: 1030;">-->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                    <i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <!-- Messages Dropdown Menu -->
+
+            <li class="nav-item dropdown mr-3 lead">
+                <h6 class="m-1" id="time" style="color: white;"></h6>
+            </li>
+
+            <li class="nav-item">
+                <button type="button" id="btn-sidebar-1" class="btn btn-outline-secondary">
+                    <p>1</p>
+                </button>
+                <button type="button" id="btn-sidebar-2" class="btn btn-outline-secondary">
+                    <p>2</p>
+                </button>
+                <button type="button" id="btn-sidebar-search" class="btn btn-outline-secondary">
+                    <p>3</p>
+                </button>
+                <button type="button" id="sidebarInfoCollapse" class="btn btn-outline-secondary">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </li>
+
+        </ul>
+        <!--</div>-->
+        <!-- </div>-->
+    </nav>
+    <!-- HEADER -->
+
+    <!-- SIDEBAR-->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="z-index: 1030;">
+
+        <a href="../../index3.html" class="brand-link">
+            <span class="brand-text font-weight-light">AdminLTE 3</span>
+        </a>
+
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fa-solid fa-industry"></i>
+                            <p style="color: white;">
+                                Здания
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: none;">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" aria-expanded="false" data-toggle="modal"
+                                   data-target="#exampleModal">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Помещение №1</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Flot</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../charts/inline.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Inline</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../charts/uplot.html" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>uPlot</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="openSearchForm()">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <p style="color: white;">
+                                Поиск
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fa-regular fa-a"></i>
+                            <p style="color: white;">
+                                Анкера
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: none;">
+                            <li class="nav-item">
+                                <a id="Anch" class="nav-link" href="#">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Показать/скрыть анкера</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </aside>
+    <!-- SIDEBAR-->
+
+    <!-- SIDEBAR-INFO-RIGHT-->
+    <aside class="sidebar-info sidebar-dark-primary elevation-4" id="sidebarShell" style="">
+        <a href="../../index3.html" class="brand-link">
+            <span class="brand-text font-weight-light">AdminLTE 3</span>
+        </a>
+        <button type="button" id="dismiss">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="sidebar-info-header">
+        </div>
+        <ul class="list-unstyled components">
+            <div id="sidebar-content-info">
+                <div id="sidebar-content-info-1">
+                    <h4 style="color: white;">Один человек</h4>
+                </div>
+                <div id="sidebar-content-info-2">
+                    <h4 style="color: white;">Много людей</h4>
+                </div>
+                <div id="sidebar-content-info-search">
+                    <!-- +результат поиска? -->
+                    <form action="#" class="container">
+                        <h4 style="color: white;">Поиск</h4>
+                        <div class="">
+                            <label for="name"><b style="color: white;">Фамилия</b></label>
+                            <input type="text" placeholder="Фамилия сотрудника" name="family" required>
+                            <label for="name"><b style="color: white;">Имя</b></label>
+                            <input type="text" placeholder="Имя сотрудника" name="name" required>
+                            <label for="email"><b style="color: white;">Отчество</b></label>
+                            <input type="text" placeholder="Отчество сотрудника" name="father" required>
+                            <button type="submit" class="btn btn-outline-secondary" style="color: white;">Искать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </ul>
+    </aside>
+    <!-- SIDEBAR-INFO-RIGHT-->
+
+    <!-- CONTENT -->
+    <div class="content-wrapper" style="background-color: #FFFFFF; margin: 0; padding: 0">
+        <!--
+                <div class="content-header">
+                    <div class="container">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0"> Top Navigation <small>Example 3.0</small></h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                                    <li class="breadcrumb-item active">Top Navigation</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        -->
+
+        <div class="content" style="margin: 0; padding: 0">
+            <div class="container" style="margin: 0; padding: 10px">
+                <div style="display: flex; justify-content: center; z-index:1;">
+                    <canvas id="canvas" style="z-index:1; height: 100vh; width: 100vw;"></canvas>
+                </div><!-- display: flex; justify-content: center; < position: absolute -->
+                <!--border: 1px solid black;-->
+            </div>
+        </div>
+
+        <div style="position: fixed; z-index:2; bottom: 15px; right: 15px;">
+            <button id="Up" type="button" class="btn btn-outline-secondary" style="">Вверх</button>
+            <button id="Down" type="button" class="btn btn-outline-secondary" style="">Вниз</button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">ГК</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trigger right form -->
+        <!--<button class="open-button" onclick="openForm()">Подпишитесь</button>-->
+        <!-- Right form -->
+        <!--
+        <div class="form-popup" id="myForm">
+          <form action="#" class="form-container">
+            <h1>Подписаться</h1>
+
+            <label for="name"><b>Имя</b></label>
+            <input type="text" placeholder="Ваше имя" name="name" required>
+
+          <label for="email"><b>Е-мейл</b></label>
+            <input type="text" placeholder="Ваш е-мейл" name="email" required>
+
+            <button type="submit" class="btn">Отправить</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Закрыть</button>
+          </form>
+        </div>
+        -->
+    </div>
+    <!-- CONTENT -->
+
+
+    <div class="overlay"></div>
+
+</div>
+
+<script src="{% static 'SiberiaApp/adminlte/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/sparklines/sparkline.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/dist/js/adminlte.js?v=3.2.0' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/dist/js/demo.js' %}"></script>
+<script src="{% static 'SiberiaApp/adminlte/dist/js/pages/dashboard.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+<!-- Clock script --> <!---->
+<script>
+    function clock() {
+        var d = new Date();
+        var day = d.getDate();
+        var hrs = d.getHours();
+        var min = d.getMinutes();
+        var sec = d.getSeconds();
+
+        var mnt = new Array("января", "февраля", "марта", "апреля", "мая",
+            "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря");
+
+        if (day <= 9) day = "0" + day;
+        if (hrs <= 9) hrs = "0" + hrs;
+        if (min <= 9) min = "0" + min;
+        if (sec <= 9) sec = "0" + sec;
+
+        $("#time").html("Время: " + hrs + ":" + min + ":" + sec + "&nbsp;&nbsp;&nbsp;" +
+            day + " " + mnt[d.getMonth()] + " " + d.getFullYear() + " г.");
+    }
+
+    $(document).ready(function () {
+        clock()
+        setInterval("clock()", 1000);
+    });
+</script>
+
+<!-- Main Canvas script --> <!---->
+<script>
+    var element = $('#canvas'),
+        canvas = new fabric.Canvas(element.get(0), {
+            selection: false,
+            scale: 1,
+            moveCursor: 'default',
+            hoverCursor: 'default',
+        });
+
+    var baseWidth = 0, // начальная ширина
+        baseHeight = 0, // начальная высота
+        baseScale = 1, // начальный масштаб
+
+        width = 0, // текущая ширина
+        height = 0, // текущая высота
+        transX = 0, // текущее смещение по оси x
+        transY = 0, // текущее смещение по оси y
+        scale = 1; // текущий масштаб в целом
+
+    var Number = 1;
+
+    width = window.innerWidth - 20; //!!! Изменение размеров canvas
+    height = window.innerHeight - 80; //!!!
+
+    var applyTransform = function () {
+        var maxTransX,
+            maxTransY,
+            minTransX,
+            minTransY,
+            group;
+
+        // Рассчитаем пороговые значения для смещения по оси x
+        if (baseWidth * scale <= width) {
+            // Карта целиком помещается на холст
+            maxTransX = (width - baseWidth * scale) / (2 * scale);
+            minTransX = (width - baseWidth * scale) / (2 * scale);
+        } else {
+            // Не влазит
+            maxTransX = 0;
+            minTransX = (width - baseWidth * scale) / scale;
+        }
+
+        // Ограничим смещение пороговыми значениями
+        if (transX > maxTransX) {
+            transX = maxTransX;
+        } else if (transX < minTransX) {
+            transX = minTransX;
+        }
+        //console.log('transX ' + transX);
+        //console.log('maxTransX ' + maxTransX);
+        //console.log('minTransX ' + minTransX);
+
+        // То же самое для оси y
+        if (baseHeight * scale <= height) {
+            maxTransY = (height - baseHeight * scale) / (2 * scale);
+            minTransY = (height - baseHeight * scale) / (2 * scale);
+        } else {
+            maxTransY = 0;
+            minTransY = (height - baseHeight * scale) / scale;
+        }
+        if (transY > maxTransY) {
+            transY = maxTransY;
+        } else if (transY < minTransY) {
+            transY = minTransY;
+        }
+        //console.log('transY ' + transY);
+        //console.log('maxTransY ' + maxTransY);
+        //console.log('minTransY ' + minTransY);
+
+        // Сгруппируем все объекты на холсте и применим трансформацию
+        group = new fabric.Group(canvas.getObjects());
+        group.scaleX = scale / canvas.scale;
+        group.scaleY = scale / canvas.scale;
+        group.left = transX * scale;
+        group.top = transY * scale;
+        //console.log('group.scaleX ' + group.scaleX);
+        //console.log('group.scaleY ' + group.scaleY);
+        //console.log('group.left ' + group.left);
+        //console.log('group.top ' + group.top);
+        group.destroy();
+
+        // Обновим глобальный масштаб на холсте
+        canvas.scale = scale;
+
+        // Отрисуем холст с изменёнными объектами
+        canvas.renderAll();
+    };
+
+    var setScale = function (scaleToSet, anchorX, anchorY) {
+        var zoomMax = 12, // максимально -ти кратное увеличение
+            zoomMin = 1, // минимальное увеличение - реальный размер картинки
+            zoomStep; // необходимое изменение масштаба
+
+        // Ограничим масштаб, если нужно
+        if (scaleToSet > zoomMax * baseScale) {
+            scaleToSet = zoomMax * baseScale;
+        } else if (scaleToSet < zoomMin * baseScale) {
+            scaleToSet = zoomMin * baseScale;
+        }
+
+        // Центр масштабирования - точка, которая должна остаться на месте.
+        // Задаётся параметрами anchorX и anchorY.
+        // По сути это позиция курсора в момент масштабирования.
+        if (typeof anchorX != 'undefined' && typeof anchorY != 'undefined') {
+            zoomStep = scaleToSet / scale;
+            // Рассчитаем, на сколько нужно сместить все объекты,
+            // чтобы центр масштабирования остался на месте.
+            transX -= (zoomStep - 1) / scaleToSet * anchorX;
+            transY -= (zoomStep - 1) / scaleToSet * anchorY;
+        }
+
+        scale = scaleToSet;
+        applyTransform();
+    };
+
+    var bindContainerEvents = function () {
+        var mouseDown = false,
+            oldPageX,
+            oldPageY,
+            container = $(canvas.wrapperEl);
+
+
+        container.mousemove(function (e) {
+            // Непосредственно перемещение
+            if (mouseDown) {
+                // Рассчитываем смещение с учётом масштаба
+                transX -= (oldPageX - e.pageX) / scale;
+                transY -= (oldPageY - e.pageY) / scale;
+
+                applyTransform();
+
+                oldPageX = e.pageX;
+                oldPageY = e.pageY;
+                return false;
+            }
+        }).mousedown(function (e) {
+            // Запомним положение в начале перемещения по карте
+            mouseDown = true;
+            oldPageX = e.pageX;
+            oldPageY = e.pageY;
+            return false;
+        });
+
+        $('body').mouseup(function () {
+            mouseDown = false;
+        });
+
+        // Масштабирование колесом мыши
+        container.bind('mousewheel', function (event) {
+            event.preventDefault();// Отключим скроллирование страницы
+            var offset = element.offset(), // положение холста на странице
+                centerX = event.pageX - offset.left, // координата x центра масштабирования
+                centerY = event.pageY - offset.top, // координата y центра масштабирования
+                zoomStep = Math.pow(1.3, event.originalEvent.deltaY / (-180)); // шаг масштабирования, удобный для пользователя.
+            //console.log('event.pageX ' + event.pageX);
+            //console.log('event.pageY ' + event.pageY);
+            //console.log('centerX ' + centerX);
+            //console.log('centerY ' + centerY);
+            setScale(scale * zoomStep, centerX, centerY);
+        });
+    };
+
+    DrawMap('{% static 'SiberiaApp/img/1.png' %}')
+
+    function DrawMap(path) {
+
+        baseWidth = 0;
+        baseHeight = 0;
+        baseScale = 1;
+
+        transX = 0;
+        transY = 0;
+        scale = 1;
+
+
+        canvas.clear();
+        canvas.scale = scale;
+        fabric.util.loadImage(path, function (img) {
+            var map = new fabric.Image(img),
+                curBaseScale;
+            bindContainerEvents();
+
+
+            // Установим начальные и текущие размеры
+            baseWidth = map.width;
+            baseHeight = map.height;
+            //console.log('baseWidth ' + baseWidth);
+            //console.log('baseHeight ' + baseHeight);
+
+
+            //width = element.width();
+            //height = element.height();
+            //console.log('element.width() ' + width);
+            //console.log('element.height() ' + height);
+
+            // Отключим любую возможность редактирования и выбора карты как объекта на холсте
+            map.set({
+                hasRotatingPoint: false,
+                hasBorders: false,
+                hasControls: false,
+                lockScalingY: true,
+                lockScalingX: true,
+                selectable: false,
+                left: map.width / 2,
+                top: map.height / 2,
+                originX: 'center',
+                originY: 'center'
+            });
+
+            canvas.add(map);
+
+            // Отмасштабируем, чтобы сразу видеть всю карту
+            curBaseScale = baseScale;
+            //console.log('curBaseScale ' + curBaseScale);
+            if (width / height > baseWidth / baseHeight) {
+                baseScale = height / baseHeight;
+                //console.log('width / height > baseWidth / baseHeight ');
+            } else {
+                baseScale = width / baseWidth;
+                //console.log('width / height <= baseWidth / baseHeight ');
+            }
+            //console.log('baseScale ' + baseScale);
+
+            scale *= baseScale / curBaseScale;
+            transX *= baseScale / curBaseScale;
+            transY *= baseScale / curBaseScale;
+            //console.log('scale ' + scale);
+            //console.log('transX ' + transX);
+            //console.log('transY ' + transY);
+
+            canvas.setWidth(width);
+            canvas.setHeight(height);
+
+            //console.log('canvas.setWidth(width) ' + width);
+            //console.log('canvas.setWidth(width) ' + height);
+            applyTransform();
+
+            //addMarkersOnMap();
+
+        });
+    };
+
+    var markerColor = '#2567d5';
+
+    var addMarker = function (point, text) {
+        // Сама метка
+        var marker = new fabric.Path('m 11,-19.124715 c -8.2234742,0 -14.8981027,-6.676138 -14.8981027,-14.9016 0,-5.633585 3.35732837,-10.582599 6.3104192,-14.933175 C 4.5507896,-52.109948 9.1631953,-59.34619 11,-61.92345 c 1.733396,2.518329 6.760904,9.975806 8.874266,13.22971 3.050966,4.697513 6.023837,8.647788 6.023837,14.667425 0,8.225462 -6.674629,14.9016 -14.898103,14.9016 z m 0,-9.996913 c 2.703016,0 4.903568,-2.201022 4.903568,-4.904687 0,-2.703664 -2.200552,-4.873493 -4.903568,-4.873493 -2.7030165,0 -4.903568,2.169829 -4.903568,4.873493 0,2.703665 2.2005515,4.904687 4.903568,4.904687 z"',
+                {
+                    width: 40,
+                    height: 80,
+                    scaleX: scale,
+                    scaleY: scale,
+                    left: point.x,
+                    top: point.y,
+                    originX: 'center',
+                    originY: 'center',
+                    fill: markerColor,
+                    stroke: '#2e69b6',
+                    text: text // сохраним текст в объекте для импорта/экспорта
+                }),
+            // Текст
+            textObject = new fabric.Text(text, {
+                fontSize: 30,
+                originX: 'center',
+                fill: markerColor,
+                originY: 'center'
+            }),
+            // Обёртка вокруг текста
+            background = new fabric.Rect({
+                width: 100,
+                height: 40,
+                originX: 'center',
+                originY: 'center',
+                fill: 'white',
+                stroke: 'black'
+            }),
+            // Сгруппируем их для правильного позиционирования
+            textGroup = new fabric.Group([background, textObject], {
+                scaleX: scale,
+                scaleY: scale,
+                left: point.x + 20 * scale, // необходимо учитывать масштаб
+                top: point.y - 30 * scale // необходимо учитывать масштаб
+            });
+        //console.log('scale ' + scale);
+        groupAnkers.add(marker);
+        groupAnkers.add(textGroup);
+        canvas.add(marker);
+        canvas.add(textGroup);
+        marker.opacity = 0;
+        textGroup.opacity = 0;
+    };
+
+    var showAnkers = false;
+    var groupAnkers = new fabric.Group();
+
+    document.getElementById("Anch").onclick = function () {
+        var ActiveObjectAnchors = groupAnkers.getObjects();
+        if (showAnkers) {
+            showAnkers = false;
+            ActiveObjectAnchors.forEach(function (obj) {
+                obj.opacity = 0;
+            });
+            canvas.renderAll();
+            console.log('showAnkers ' + showAnkers);
+        } else {
+            showAnkers = true;
+            ActiveObjectAnchors.forEach(function (obj) {
+                obj.opacity = 1;
+            });
+            canvas.renderAll();
+            console.log('showAnkers ' + showAnkers);
+        }
+    };
+
+    document.getElementById("Up").onclick = function () {
+        switch (Number) {
+            case 1:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/2.png' %}');
+                break;
+            case 2:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/3.png' %}');
+                break;
+            case 3:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/4.png' %}');
+                break;
+            case 4:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/5.png' %}');
+                break;
+            case 5:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/6.png' %}');
+                break;
+            case 6:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/7.png' %}');
+                break;
+            case 7:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/8.png' %}');
+                break;
+            case 8:
+                Number++;
+                DrawMap('{% static 'SiberiaApp/img/9.png' %}');
+                break;
+            case 9:
+                break;
+        }
+    };
+
+    document.getElementById("Down").onclick = function () {
+        switch (Number) {
+            case 1:
+                break;
+            case 2:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/1.png' %}');
+                break;
+            case 3:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/2.png' %}');
+                break;
+            case 4:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/3.png' %}');
+                break;
+            case 5:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/4.png' %}');
+                break;
+            case 6:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/5.png' %}');
+                break;
+            case 7:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/6.png' %}');
+                break;
+            case 8:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/7.png' %}');
+                break;
+            case 9:
+                Number--;
+                DrawMap('{% static 'SiberiaApp/img/8.png' %}');
+                break;
+        }
+    };
+
+    function addMarkersOnMap() {
+        showAnkers = false;
+        switch (Number) {
+            case 1:
+                addMarker({x: 550, y: 390}, 'A1');
+                addMarker({x: 790, y: 120}, 'A2');
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+            case 8:
+
+                break;
+            case 9:
+
+                break;
+        }
+    };
+</script>
+
+<!-- Sidebar-info collapse code -->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#dismiss, .overlay').on('click', function () {
+            $('#sidebarShell').removeClass('active');
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarInfoCollapse').on('click', function () {
+            $('#sidebarShell').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').collapse('hide');
+        });
+
+        $('#btn-sidebar-1').on('click', function () {
+            document.getElementById("sidebar-content-info-1").style.display = "block";
+            document.getElementById("sidebar-content-info-2").style.display = "none";
+            document.getElementById("sidebar-content-info-search").style.display = "none";
+        });
+        $('#btn-sidebar-2').on('click', function () {
+            document.getElementById("sidebar-content-info-2").style.display = "block";
+            document.getElementById("sidebar-content-info-1").style.display = "none";
+            document.getElementById("sidebar-content-info-search").style.display = "none";
+        });
+        $('#btn-sidebar-search').on('click', function () {
+            document.getElementById("sidebar-content-info-search").style.display = "block";
+            document.getElementById("sidebar-content-info-1").style.display = "none";
+            document.getElementById("sidebar-content-info-2").style.display = "none";
+            $('#sidebarShell').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').collapse('hide');
+        });
+    });
+
+    function openPersonForm() {
+        document.getElementById("sidebar-content-info-1").style.display = "block";
+        document.getElementById("sidebar-content-info-2").style.display = "none";
+        document.getElementById("sidebar-content-info-search").style.display = "none";
+        $('#sidebarShell').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').collapse('hide');
+    }
+
+    function openPeopleForm() {
+        document.getElementById("sidebar-content-info-2").style.display = "block";
+        document.getElementById("sidebar-content-info-1").style.display = "none";
+        document.getElementById("sidebar-content-info-search").style.display = "none";
+        $('#sidebarShell').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').collapse('hide');
+    }
+
+    function openSearchForm() {
+        document.getElementById("sidebar-content-info-search").style.display = "block";
+        document.getElementById("sidebar-content-info-1").style.display = "none";
+        document.getElementById("sidebar-content-info-2").style.display = "none";
+        $('#sidebarShell').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').collapse('hide');
+    }
+
+</script>
+
+</body>
+</html>
